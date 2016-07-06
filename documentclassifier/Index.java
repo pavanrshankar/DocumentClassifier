@@ -40,7 +40,7 @@ public class Index {
                             frequency.add(count);                            
                     }
                     
-                    paper = new Research_paper(fields[0], fields[1], fields[2], fields[3],Pdf_Read.readContent(f.getAbsolutePath()),frequency);
+                    paper = new Research_paper(fields[0], fields[1], fields[2], fields[3],words_noduplicates,frequency);
                 }
                 catch(IOException e){
                     System.out.println("No file found");
