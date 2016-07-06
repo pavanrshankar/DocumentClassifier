@@ -57,9 +57,7 @@ public class Tf_Idf {
                   i++;             
                }
                document_index = getMaxIndex(class_scores);
-               System.out.println("Doc Index:" + document_index);
                Class_info class_id = class_list.hashmap.get(document_index);
-               System.out.println("Paper:" + class_id);
                classname = class_id.classname;
                paper.setClass(classname);               
            }
@@ -90,7 +88,6 @@ public class Tf_Idf {
                 i = j;
             }
         }  
-        System.out.print(maxval+" ");
         return i;
     }
 }
