@@ -39,7 +39,6 @@ public class Tf_Idf {
                   int curr_class_index = (Integer) itr_class.next();
                   current_class = class_list.hashmap.get(curr_class_index);
                   class_keywords = current_class.getKeywords();
-                  class_keywords_iterator = class_keywords.iterator();
                   list = paper.get_Keywords();
                   document_keyword_itr = (Iterator) list.iterator();
                   frequency = paper.getFrequencyList();
@@ -49,10 +48,10 @@ public class Tf_Idf {
                   while(document_keyword_itr.hasNext() && document_frequency_iterator.hasNext()){
                       keyword = (String) document_keyword_itr.next();
                       if(class_keywords.contains(keyword)){                     
-                          class_scores[i] += (Integer) document_frequency_iterator.next() * getImportance(index, keyword);
+                          class_scores[i] += (Integer) document_frequency_iterator.next() * getImportance(itr_class, keyword);
                       }
                       else{
-                          class_scores[i] += 0.0002 * getImportance(index, keyword);
+                          class_scores[i] += 0.0002 * getImportance(itr_class, keyword);
                       } 
                   }
                   i++;             
@@ -66,21 +65,18 @@ public class Tf_Idf {
            }
     }
     
-    public float getImportance(Index index, String keyword){
-        Set<Integer> keyset = index.hashmap.keySet();
-        Iterator itr = keyset.iterator();
-        int Dif = 0;
-        int doc_count = 0;
-        Research_paper paper;
+    public float getImportance(Iterator itr,String keyword){
+        int total_count = 0;
+        int class_count = 0;
         while(itr.hasNext()){
-            doc_count++;
-            int key = (int) itr.next();
-            paper = index.hashmap.get(key);
-            if(paper.get_Keywords().contains(keyword)){
-                Dif++;
+            total_count++;
+            Class_info current_class = itr.next();
+            ArrayList<String> class_keywords = current_class.getKeywords();
+            if(class_keywords.contains(keyword)){
+                class_count++;
             }
         }
-        float importance = (float) Math.log(doc_count/Dif);
+        float importance = (float) Math.log(total_count/class_count);
         return importance;
         
     }
